@@ -1,5 +1,5 @@
 import * as yargs from "yargs";
-import { SearchContext } from "./searchContext";
+import * as searchContext from "./searchContext";
 
 async function main() {
   const args = yargs.options({
@@ -42,7 +42,6 @@ async function main() {
   ];
   const sortPriceHigh = args.high ? true : args.low ? false : true;
 
-  const searchContext = new SearchContext();
   const resultsPerPage = 5;
   const dollars = new Intl.NumberFormat(`en-US`, {
     style: `currency`,

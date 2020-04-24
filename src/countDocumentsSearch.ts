@@ -1,7 +1,6 @@
-import { SearchContext } from "./searchContext";
+import * as searchContext from "./searchContext";
 
 async function main() {
-  const searchContext = new SearchContext();
   const documentsCount:number = await searchContext.getCountDocuments();
   console.log(`Documents Count: ${documentsCount}`);
 }

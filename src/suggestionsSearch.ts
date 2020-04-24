@@ -1,5 +1,5 @@
 import * as yargs from "yargs";
-import { SearchContext } from "./searchContext";
+import * as searchContext from "./searchContext";
 
 async function main() {
   const args = yargs.options({
@@ -11,7 +11,6 @@ async function main() {
   }).argv;
 
   const searchText:string = args.search;
-  const searchContext:SearchContext = new SearchContext();
   const suggestions:string[] = await searchContext.getSuggestions(searchText);
 
   if(suggestions.length == 0) {

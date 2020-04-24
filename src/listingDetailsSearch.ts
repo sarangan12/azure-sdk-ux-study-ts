@@ -1,5 +1,5 @@
 import * as yargs from "yargs";
-import { SearchContext } from "./searchContext";
+import * as searchContext from "./searchContext";
 
 async function main() {
   const args = yargs.options({
@@ -11,7 +11,6 @@ async function main() {
   }).argv;
 
   const listingId = args.listingid;
-  const searchContext = new SearchContext();
   try {
     const result = await searchContext.getListingDetails(listingId);
     console.log(`Listing ID: ${result.listingId}`);

@@ -1,5 +1,5 @@
 import * as yargs from "yargs";
-import { SearchContext } from "./searchContext";
+import * as searchContext from "./searchContext";
 
 async function main() {
   const args = yargs.options({
@@ -20,8 +20,6 @@ async function main() {
     args.top
   ];
   
-  const searchContext = new SearchContext();
-
   const dollars = new Intl.NumberFormat(`en-US`, { style: `currency`, currency: `USD` });
   const results = await searchContext.searchBasic(searchText, top);
   console.log(`Summary:`);
