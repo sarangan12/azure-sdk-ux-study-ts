@@ -1,0 +1,19 @@
+{
+  "name": "azure-sdk-ux-study-ts",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@azure/search-documents": "^1.0.0-preview.2",
+    "yargs": "^15.3.1"
+  },
+  "devDependencies": {
+    "@types/yargs": "^15.0.4",
+    "typescript": "^3.8.3"
+  }
+}
