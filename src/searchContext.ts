@@ -5,6 +5,9 @@ import {
   AutocompleteResult,
 } from "@azure/search-documents";
 
+//TODO-TASK-1: install azure search-documents package
+//TODO-TASK-2: Write code to create a search index client to interact with it to perform search operations in the next sections
+
 const getEnvVar = (name: string) => {
   let value = process.env[name];
   if (!value) {
@@ -17,6 +20,7 @@ const endpoint = getEnvVar(`UX_SEARCH_ENDPOINT`);
 const apiKey = getEnvVar(`UX_SEARCH_APIKEY`);
 const indexName = getEnvVar(`UX_SEARCH_INDEX`);
 
+//The interface we're expecting for property listings based on the Schema for documents in the index
 interface Listing {
   listingId: string;
   description: string;
@@ -38,86 +42,23 @@ interface SearchContext {
 }
 
 export async function searchBasic(searchText: string, top: number): Promise<SearchContext> {
-  const client = new SearchIndexClient<Listing>(
-    endpoint,
-    indexName,
-    new AzureKeyCredential(apiKey)
-  );
-  const options: any = {
-    searchText,
-    skip: 0,
-    top: top,
-    includeTotalResultCount: true,
-    facets: [`type`],
-  };
-
-  const response = await client.search(options);
-  const results:SearchContext = {
-    listings: <Listing[]>[],
-    totalCount: 0,
-    unitTypes: <{ [unit: string]: number }>{}
-  };
-
-  results.totalCount = response.count || 0;
-  for await (const result of response.results) {
-    results.listings.push(result);
-  }
-  results.unitTypes = {};
-  if (response.facets) {
-    for (const facet of response.facets[`type`]) {
-      results.unitTypes[facet.value || "type"] = facet.count || 0;
-    }
-  }
-  return results;
-}
-
-export async function getListingDetails(id: string): Promise<Listing> {
-  const client = new SearchIndexClient<Listing>(
-    endpoint,
-    indexName,
-    new AzureKeyCredential(apiKey)
-  );
-  return await client.getDocument(id);
-}
-
-export async function getSuggestions(searchText: string): Promise<string[]> {
-  const client = new SearchIndexClient<Listing>(
-    endpoint,
-    indexName,
-    new AzureKeyCredential(apiKey)
-  );
-  const suggestions = await client.suggest({
-    searchText,
-    suggesterName: "sg",
-  });
-  return suggestions.results.map((r) => r.text);
+  //TODO-TASK-3: Write code to query documents in the index based on searchText parameter and return the top # of results
 }
 
 export async function getCountDocuments(): Promise<number> {
-  const client = new SearchIndexClient<Listing>(
-    endpoint,
-    indexName,
-    new AzureKeyCredential(apiKey)
-  );
-  const count: number = await client.countDocuments();
-  return count;
+  //TODO-TASK-4: Write code to return the count of documents
 }
 
 export async function getAutoComplete(searchText: string): Promise<string[]> {
-  const client = new SearchIndexClient<Listing>(
-    endpoint,
-    indexName,
-    new AzureKeyCredential(apiKey)
-  );
-  const results: AutocompleteResult = await client.autocomplete({
-    searchText: searchText,
-    suggesterName: "sg",
-  });
-  const autoCompleteResults: string[] = [];
-  for (const result of results.results) {
-    autoCompleteResults.push(result.text);
-  }
-  return autoCompleteResults;
+  //TODO-TASK-5: Write code to return list of autocomplete results based on searchText
+}
+
+export async function getListingDetails(id: string): Promise<Listing> {
+  //TODO-TASK-6: Write code to get a document by its id from the index and return its details
+}
+
+export async function getSuggestions(searchText: string): Promise<string[]> {
+  //TODO-TASK-7: Write code to return result suggestions for a user query (searchText)
 }
 
 export async function getExtendedSearch(
@@ -128,51 +69,12 @@ export async function getExtendedSearch(
   minBedrooms: number,
   unitType: string
 ): Promise<SearchContext> {
-  const client = new SearchIndexClient<Listing>(
-    endpoint,
-    indexName,
-    new AzureKeyCredential(apiKey)
-  );
-  const options: any = {
-    searchText,
-    skip: pageNumber * resultsPerPage,
-    top: resultsPerPage,
-    includeTotalResultCount: true,
-    facets: [`type`],
-  };
-  if (sortPriceHigh === true) {
-    options.orderBy = [`price desc`];
-  } else if (sortPriceHigh === false) {
-    options.orderBy = [`price asc`];
-  }
-  if (minBedrooms !== undefined) {
-    options.filter = odata`beds ge ${minBedrooms}`;
-  }
-  if (unitType) {
-    const unitFilter = odata`type eq ${unitType}`;
-    if (options.filter) {
-      options.filter += `and ${unitFilter}`;
-    } else {
-      options.filter = unitFilter;
-    }
-  }
-  const response = await client.search(options);
-
-  const results:SearchContext = {
-    listings: <Listing[]>[],
-    totalCount: 0,
-    unitTypes: <{ [unit: string]: number }>{}
-  };
-  results.totalCount = response.count || 0;
-  for await (const result of response.results) {
-    results.listings.push(result);
-  }
-  results.unitTypes = {};
-  if (response.facets) {
-    for (const facet of response.facets[`type`]) {
-      results.unitTypes[facet.value || "type"] = facet.count || 0;
-    }
-  }
-  return results;
+  //TODO-TASK-8: Write code to query documents using searchText and return the results only from the specified page
+  // you should sort results descending or ascending based on the price field and
+  // Add the search filters based on the minimum bedrooms value
+  // you need to also add a type facet then adding an
+  // additional filter based on unitType
+  //NOTE: if sortPriceHigh is true, sort descending and otherwise sort ascending
+  //NOTE: Set the totalCount, listings and unitTypes of SearchContext class accordingly
 }
 
