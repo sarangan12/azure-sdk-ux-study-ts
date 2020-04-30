@@ -73,7 +73,7 @@ node out/countDocumentsSearch.js
 This scenario provides a list of autocomplete results based on the search text provided. Please find a sample command to execute this scenario:
 
 ```
-node out/autoCompleteSearch.js --search bea
+  node out/autoCompleteSearch.js --search bea
 ```
 
 ### Listing Details Search

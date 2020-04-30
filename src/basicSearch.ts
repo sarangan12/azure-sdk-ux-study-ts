@@ -25,8 +25,8 @@ async function main() {
   console.log(`Summary:`);
   console.log(`       Count: ${results.totalCount}`);
   console.log(`       Pages: ${Math.ceil(results.totalCount / top)}`);
-  console.log(`      Houses: ${results.unitTypes[`House`]}`);
-  console.log(`  Apartments: ${results.unitTypes[`Apartment`]}`);
+  console.log(`      Houses: ${results.unitTypes![`House`]}`);
+  console.log(`  Apartments: ${results.unitTypes![`Apartment`]}`);
   console.log();
 
   for (const listing of results.listings) {

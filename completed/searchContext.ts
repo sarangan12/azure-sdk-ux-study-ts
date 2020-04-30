@@ -5,18 +5,15 @@ import {
   AutocompleteResult,
 } from "@azure/search-documents";
 
-const getEnvVar = (name: string) => {
-  let value = process.env[name];
-  if (!value) {
-    throw `Did not find environment variable ${name}`;
-  }
-  return value;
-};
+// TODO-TASK-1: Install azure search-documents package (thru npm install)
 
-const endpoint = getEnvVar(`UX_SEARCH_ENDPOINT`);
-const apiKey = getEnvVar(`UX_SEARCH_APIKEY`);
-const indexName = getEnvVar(`UX_SEARCH_INDEX`);
+const endpoint = "https://cogsearchux.search.windows.net";
+const apiKey = "A4C8777BE0353BBA8FA2603E3C731219";
+const indexName =  "realestate-us-sample-index";
 
+// TODO-TASK-2: Write code to create a search index client to interact with it to perform search operations in the next sections
+
+//The interface we're expecting for property listings based on the Schema for documents in the index
 interface Listing {
   listingId: string;
   description: string;
@@ -34,7 +31,7 @@ interface Listing {
 interface SearchContext {
   listings: Listing[];
   totalCount: number;
-  unitTypes: { [type: string]: number };  
+  unitTypes?: { [type: string]: number };
 }
 
 export async function searchBasic(searchText: string, top: number): Promise<SearchContext> {
